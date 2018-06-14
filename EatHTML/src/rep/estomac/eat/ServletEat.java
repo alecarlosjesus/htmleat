@@ -35,24 +35,38 @@ public class ServletEat extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String s = "";
-		String name = request.getParameter("character").replaceAll(" ", "+");
+		String n = "";
+		int beg=0;
+		
+		//String name = request.getParameter("character").replaceAll(" ", "+");
 		
 		try {
-			URL url = new URL("https://secure.tibia.com/community/?subtopic=characters&name="+name);
+			//URL url = new URL("https://secure.tibia.com/community/?subtopic=characters&name="+name);
+			URL url = new URL("https://secure.tibia.com/community/?subtopic=guilds&page=view&GuildName=Society+of+Exile&action=overview");
 						
 			//URI uri = url.toURI();
 			BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 			
+			//Item de retenção
+			//"?subtopic=characters&amp;name="
+		
+			int count = 0;
+			
 			while (br.ready()) {
+				n = br.readLine();
 				
-				s += br.readLine();
+				beg = n.indexOf("?subtopic=characters&amp;name=");
+				
+				if(beg > 0 ) {
+					System.out.println("\nFOUND : " + count++);
+					
+				}
+
 			}
 			br.close();
 			
-			//FILTER
-			System.out.println(s);
 			
-			//ANY FILTER
+			
 			
 			
 			request.setAttribute("mainStream", s);
